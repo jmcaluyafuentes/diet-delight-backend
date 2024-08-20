@@ -1,12 +1,17 @@
 import express from 'express'
-import MongoDB from './models/db.js';
+import ConnectDB from './models/db.js';
+import recipeRoutes from './controllers/recipeController.js'
 
 const app = express();
 
-MongoDB();
+// Connect to MongoDB Atlas
+ConnectDB();
+
+// Use recipe routes
+app.use(recipeRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Welcome to Diet-Delight API');
 });
 
 app.listen(4001, err => {

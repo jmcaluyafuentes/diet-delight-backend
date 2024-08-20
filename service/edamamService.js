@@ -19,17 +19,17 @@ const fetchRecipes = async () => {
     }
 }
 
-// Testing the function
-const testFetchRecipes = async () => {
-    try {
-        const data = await fetchRecipes();
-        console.log(data.hits); // Output: All recipes filtered on ${query} parameter
-        // console.log(data.hits[1].recipe.ingredients);
-    } catch (err) {
-        console.error('Test failed:', err);
-    }
-};
+// // Testing the function
+// const testFetchRecipes = async () => {
+//     try {
+//         const data = await fetchRecipes();
+//         console.log(data.hits); // Output: All recipes filtered on ${query} parameter
+//         // console.log(data.hits[1].recipe.ingredients);
+//     } catch (err) {
+//         console.error('Test failed:', err);
+//     }
+// };
 
-testFetchRecipes();
+// testFetchRecipes();
 
 export default fetchRecipes;

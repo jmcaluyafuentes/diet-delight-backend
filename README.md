@@ -208,3 +208,6 @@ Example Request:
 
 Response:  
 Status Code: `200 OK`
+
+Response body:  
+Please refer to https://diet-delight-backend.onrender.com/recipes?diet=high-protein&health=egg-free

@@ -151,12 +151,16 @@ The backend temporarily saves recipe data retrieved from the third-party Edamam 
 ![Recipes PDF](docs/5._Print_Recipes.png)
 
 ## R6: Screenshots of Trello Board
-### 14/08/2024
-![ToDo1.png](./docs/ToDo1.png)
-![ToDo2.png](./docs/ToDo2.png)
-![ToDo3.png](./docs/ToDo3.png)
-![ToDo4.png](./docs/ToDo4.png)
-![ToDo5.png](./docs/ToDo5.png)
+### 14/08/2024 - Tasks planning and delegation stage
+![ToDo1.png](./docs/ToDo1.png)  
+![ToDo2.png](./docs/ToDo2.png)  
+![ToDo3.png](./docs/ToDo3.png)  
+![ToDo4.png](./docs/ToDo4.png)  
+![ToDo5.png](./docs/ToDo5.png)  
+![ToDo6.png](./docs/ToDo6.png)  
+![ToDo7.png](./docs/ToDo7.png)  
+![ToDo8.png](./docs/ToDo8.png)  
+![ToDo9.png](./docs/ToDo9.png
 ### 21/08/2024 - Implementation Stage
 ![TelloBoard.png](./docs/trelloboard.png)
 
@@ -188,4 +192,3 @@ Status Code: `200 OK`
 
 Response body:  
 Please refer to https://diet-delight-backend.onrender.com/recipes?diet=high-protein&health=egg-free
->>>>>>> main

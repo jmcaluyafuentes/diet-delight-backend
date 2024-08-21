@@ -184,3 +184,27 @@ Link to our Trello board --> https://trello.com/b/K1DuOj8t/diet-delight-web-app
 ### 21/08/2024 - Update
 
 ![TrelloBoard_21-08-2024.png](./docs/TrelloBoard_21-08-2024.png)
+
+### API Endpoints
+
+## `GET /recipes`
+
+### Decription
+
+Fetches recipes based on selected diet and health criteria from third-party Edamam API and returns a list of recipes.
+
+### Query Parameters
+
+diet (optional, array):  
+A comma-separated list of diet criteria to filter recipes.  
+Example values: high-protein, high-fiber
+
+health (optional, array):  
+A comma-separated list of health criteria to filter recipes.  
+Example values: egg-free, fish-free
+
+Example Request:  
+`GET /recipes?diet=high-protein&health=egg-free`
+
+Response:  
+Status Code: `200 OK`

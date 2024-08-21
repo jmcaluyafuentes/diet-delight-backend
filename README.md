@@ -157,5 +157,8 @@ The backend temporarily saves recipe data retrieved from the third-party Edamam 
 ![ToDo3.png](./docs/ToDo3.png)
 ![ToDo4.png](./docs/ToDo4.png)
 ![ToDo5.png](./docs/ToDo5.png)
-### 21/08/2024
-![TrelloBoard_21-08-2024.png](./docs/TrelloBoard_21-08-2024.png)
+### 21/08/2024 - Implementation Stage
+![TelloBoard.png](./docs/trelloboard.png)
+
+### 22/08/2024 - Implementation Stage
+![TelloBoard2.png](./docs/trelloboard2.png)  

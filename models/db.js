@@ -23,12 +23,14 @@ const recipeSchema = new mongoose.Schema({
     dietLabels: [{ type: String }], // Commonly used nutrient level aspects of the recipe.
     healthLabels: [{ type: String }], // Commonly used ingredient level aspects of the recipe.
     ingredients: [{ type: String }], // List of ingredients
-    calories: { type: Number }, // Total calories
+    servingSize: { type: Number }, // Number of servings
+    caloriesPerServing: { type: Number }, // Calories per serving (kcal)
     totalTime: { type: Number }, // totalTime = prep time + cooking time (in minutes)
     cuisineType: [{ type: String }], // e.g. Australian, Italian, Japanese
     mealType: [{ type: String }], // e.g. breakfast, lunch, dinner
     dishType: [{ type: String }], // The food category (e.g., main course, salad, soup)
-    totalNutrients: [nutrientSchema] // Nutritional information
+    totalNutrients: [nutrientSchema], // Nutritional information
+    totalNutrients: { type: Number } // Nutritional information
 });
 
 // Create a model for the Recipe schema

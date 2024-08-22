@@ -26,7 +26,7 @@ const getRecipes = async (req, res) => {
         // Check if 'hits' property exists in the API response
         if (data && data.hits) {
             // Map the first 10 recipes from the 'hits' array
-            const recipes = data.hits.slice(0, 10).map(hit => ({
+            const recipes = data.hits.slice(0, 12).map(hit => ({
                 title: hit.recipe.label, // Recipe title
                 image: hit.recipe.image, // Recipe image URL
                 source: hit.recipe.source || 'Unknown', // Source of the recipe

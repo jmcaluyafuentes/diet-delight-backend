@@ -34,13 +34,13 @@ const getRecipes = async (req, res) => {
                 dietLabels: hit.recipe.dietLabels || [], // Commonly used nutrient level aspects of the recipe.
                 healthLabels: hit.recipe.healthLabels || [], // Commonly used ingredient level aspects of the recipe.
                 ingredients: hit.recipe.ingredientLines || [], // List of ingredients
-                calories: hit.recipe.calories || 0, // Total calories
-                totalTime: hit.recipe.totalTime || 0, // totalTime = prep time + cooking time (in minutes)
+                servingSize: hit.recipe.yield !== undefined ? hit.recipe.yield : null, // Number of servings
+                caloriesPerServing: hit.recipe.calories !== undefined ? hit.recipe.calories / hit.recipe.yield : null, // Calories per serving (kcal)
+                totalTime: hit.recipe.totalTime !== undefined ? hit.recipe.totalTime : null, // totalTime = prep time + cooking time (in minutes)
                 cuisineType: hit.recipe.cuisineType || [], // e.g. Australian, Italian, Japanese
                 mealType: hit.recipe.mealType || [], // e.g. breakfast, lunch, dinner
                 dishType: hit.recipe.dishType || [], // The food category (e.g., main course, salad, soup)
                 totalNutrients: hit.recipe.totalNutrients || {}, // Nutritional information
-                servingSize: hit.recipe.yield || 0, // Number of servings
             }));
 
             // Save the recipes to the MongoDB database

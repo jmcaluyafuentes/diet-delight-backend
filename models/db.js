@@ -30,7 +30,11 @@ const recipeSchema = new mongoose.Schema({
     mealType: [{ type: String }], // e.g. breakfast, lunch, dinner
     dishType: [{ type: String }], // The food category (e.g., main course, salad, soup)
     totalNutrients: [nutrientSchema], // Nutritional information
+    createdAt: { type: Date, default: Date.now } // Timestamp when the recipe is created
 });
+
+// Create a TTL index to automatically delete documents after 5 minutes (300 seconds)
+recipeSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
 
 // Create a model for the Recipe schema
 const Recipe = mongoose.model('Recipe', recipeSchema);

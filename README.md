@@ -179,8 +179,8 @@ Link to our Trello board --> https://trello.com/b/K1DuOj8t/diet-delight-web-app
 ![ToDo6.png](./docs/ToDo6.png)  
 ![ToDo7.png](./docs/ToDo7.png)  
 ![ToDo8.png](./docs/ToDo8.png)  
+![ToDo9.png](./docs/ToDo9.png)
 
-![ToDo9.png](./docs/ToDo9.png
 ### 21/08/2024 - Implementation Stage
 ![TelloBoard.png](./docs/trelloboard.png)
 

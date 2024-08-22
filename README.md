@@ -179,11 +179,13 @@ Link to our Trello board --> https://trello.com/b/K1DuOj8t/diet-delight-web-app
 ![ToDo6.png](./docs/ToDo6.png)  
 ![ToDo7.png](./docs/ToDo7.png)  
 ![ToDo8.png](./docs/ToDo8.png)  
-![ToDo9.png](./docs/ToDo9.png)  
 
-### 21/08/2024 - Update
+![ToDo9.png](./docs/ToDo9.png
+### 21/08/2024 - Implementation Stage
+![TelloBoard.png](./docs/trelloboard.png)
 
-![TrelloBoard_21-08-2024.png](./docs/TrelloBoard_21-08-2024.png)
+### 22/08/2024 - Implementation Stage
+![TelloBoard2.png](./docs/trelloboard2.png)
 
 ### API Endpoints
 

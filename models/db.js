@@ -30,7 +30,6 @@ const recipeSchema = new mongoose.Schema({
     mealType: [{ type: String }], // e.g. breakfast, lunch, dinner
     dishType: [{ type: String }], // The food category (e.g., main course, salad, soup)
     totalNutrients: [nutrientSchema], // Nutritional information
-    totalNutrients: { type: Number } // Nutritional information
 });
 
 // Create a model for the Recipe schema

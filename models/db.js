@@ -33,8 +33,8 @@ const recipeSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now } // Timestamp when the recipe is created
 });
 
-// Create a TTL index to automatically delete documents after 5 minutes (300 seconds)
-recipeSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
+// Create a TTL index to automatically delete documents after 10 minutes (600 seconds)
+recipeSchema.index({ createdAt: 1 }, { expireAfterSeconds: 600 });
 
 // Create a model for the Recipe schema
 const Recipe = mongoose.model('Recipe', recipeSchema);

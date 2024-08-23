@@ -82,7 +82,7 @@ router.post('/print', async (req, res) => {
             .text(' ')
             .fontSize(16).text('Nutrition')
             .moveDown(0.2)
-            .fontSize(12).text(`    Calories: ${recipe.caloriesPerServing.toFixed(2)} kcal`)
+            .fontSize(12).text(`    Calories: ${recipe.caloriesPerServing.toFixed(2)} kcal/serving`)
             .moveDown(0.2)
             .text(`    Serving Size: ${recipe.servingSize}`)
 

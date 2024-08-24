@@ -27,8 +27,8 @@ const getRecipes = async (req, res) => {
 
         // Check if 'hits' property exists in the API response
         if (data && data.hits) {
-            // Map the first 10 recipes from the 'hits' array
-            const recipes = data.hits.slice(0, 12).map(hit => ({
+            // Slice the first 100 recipes
+            const recipes = data.hits.slice(0, 100).map(hit => ({
                 title: hit.recipe.label, // Recipe title
                 image: hit.recipe.image, // Recipe image URL
                 source: hit.recipe.source || 'Unknown', // Source of the recipe
@@ -45,11 +45,14 @@ const getRecipes = async (req, res) => {
                 totalNutrients: hit.recipe.totalNutrients || {}, // Nutritional information
             }));
 
+            const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
+            const selectedRecipes = shuffledRecipes.slice(0, 12);
+
             // Save the recipes to the MongoDB database
             await Recipe.insertMany(recipes);
 
             // Return the recipes as a JSON response
-            res.json(recipes);
+            res.json(selectedRecipes);
         } else {
             // Return a 404 error if no recipes are found
             res.status(404).json({ error: 'No recipes found' });

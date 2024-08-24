@@ -28,6 +28,7 @@ const getRecipes = async (req, res) => {
         if (recipes.length < 12) {
             // Fetch recipes from the Edamam API
             const data = await fetchRecipes(`&${query}`);
+            console.log('Recipes fetched from Edamam API service provider.')
 
             // Check if 'hits' property exists in the API response
             if (data && data.hits) {
@@ -58,6 +59,8 @@ const getRecipes = async (req, res) => {
                 // Return a 404 error if no recipes are found
                 res.status(404).json({ error: 'No recipes found' });
             }
+        } else {
+            console.log('Recipes fetched from MongoDB.')
         }
 
     const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());

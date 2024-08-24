@@ -22,41 +22,47 @@ const getRecipes = async (req, res) => {
         const query2 = healthCriteriaArray.map(health => `health=${encodeURIComponent(health)}`).join('&');
         const query = query1 + '&' + query2;
 
-        // Fetch recipes from the Edamam API
-        const data = await fetchRecipes(`&${query}`);
+        // Check the database first for available recipes
+        let recipes = await Recipe.find({}, { _id: 0, __v: 0 }).exec();
+        
+        if (recipes.length < 12) {
+            // Fetch recipes from the Edamam API
+            const data = await fetchRecipes(`&${query}`);
 
-        // Check if 'hits' property exists in the API response
-        if (data && data.hits) {
-            // Slice the first 100 recipes
-            const recipes = data.hits.slice(0, 100).map(hit => ({
-                title: hit.recipe.label, // Recipe title
-                image: hit.recipe.image, // Recipe image URL
-                source: hit.recipe.source || 'Unknown', // Source of the recipe
-                instructionsUrl: hit.recipe.url || 'No URL available', // URL for recipe instructions
-                dietLabels: hit.recipe.dietLabels || [], // Commonly used nutrient level aspects of the recipe.
-                healthLabels: hit.recipe.healthLabels || [], // Commonly used ingredient level aspects of the recipe.
-                ingredients: hit.recipe.ingredientLines || [], // List of ingredients
-                servingSize: hit.recipe.yield !== undefined ? hit.recipe.yield : null, // Number of servings
-                caloriesPerServing: hit.recipe.calories !== undefined ? hit.recipe.calories / hit.recipe.yield : null, // Calories per serving (kcal)
-                totalTime: hit.recipe.totalTime !== undefined ? hit.recipe.totalTime : null, // totalTime = prep time + cooking time (in minutes)
-                cuisineType: hit.recipe.cuisineType || [], // e.g. Australian, Italian, Japanese
-                mealType: hit.recipe.mealType || [], // e.g. breakfast, lunch, dinner
-                dishType: hit.recipe.dishType || [], // The food category (e.g., main course, salad, soup)
-                totalNutrients: hit.recipe.totalNutrients || {}, // Nutritional information
-            }));
+            // Check if 'hits' property exists in the API response
+            if (data && data.hits) {
+                // Slice the first 100 recipes
+                const fetchedRecipes = data.hits.slice(0, 12).map(hit => ({
+                    title: hit.recipe.label, // Recipe title
+                    image: hit.recipe.image, // Recipe image URL
+                    source: hit.recipe.source || 'Unknown', // Source of the recipe
+                    instructionsUrl: hit.recipe.url || 'No URL available', // URL for recipe instructions
+                    dietLabels: hit.recipe.dietLabels || [], // Commonly used nutrient level aspects of the recipe.
+                    healthLabels: hit.recipe.healthLabels || [], // Commonly used ingredient level aspects of the recipe.
+                    ingredients: hit.recipe.ingredientLines || [], // List of ingredients
+                    servingSize: hit.recipe.yield !== undefined ? hit.recipe.yield : null, // Number of servings
+                    caloriesPerServing: hit.recipe.calories !== undefined ? hit.recipe.calories / hit.recipe.yield : null, // Calories per serving (kcal)
+                    totalTime: hit.recipe.totalTime !== undefined ? hit.recipe.totalTime : null, // totalTime = prep time + cooking time (in minutes)
+                    cuisineType: hit.recipe.cuisineType || [], // e.g. Australian, Italian, Japanese
+                    mealType: hit.recipe.mealType || [], // e.g. breakfast, lunch, dinner
+                    dishType: hit.recipe.dishType || [], // The food category (e.g., main course, salad, soup)
+                    totalNutrients: hit.recipe.totalNutrients || {}, // Nutritional information
+                }));
 
-            const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
-            const selectedRecipes = shuffledRecipes.slice(0, 12);
+                // Save the fetched recipes to the MongoDB database
+                await Recipe.insertMany(fetchedRecipes);
 
-            // Save the recipes to the MongoDB database
-            await Recipe.insertMany(recipes);
-
-            // Return the recipes as a JSON response
-            res.json(selectedRecipes);
-        } else {
-            // Return a 404 error if no recipes are found
-            res.status(404).json({ error: 'No recipes found' });
+                // Update the recipes variable with the new fetched data
+                recipes = fetchedRecipes;
+            } else {
+                // Return a 404 error if no recipes are found
+                res.status(404).json({ error: 'No recipes found' });
+            }
         }
+
+    // Return the recipes as a JSON response
+    res.json(recipes);
+
     } catch (error) {
         // Log and return a 500 error if an exception occurs
         console.error('Error fetching recipes:', error);

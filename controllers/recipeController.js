@@ -32,7 +32,7 @@ const getRecipes = async (req, res) => {
             // Check if 'hits' property exists in the API response
             if (data && data.hits) {
                 // Slice the first 100 recipes
-                const fetchedRecipes = data.hits.slice(0, 12).map(hit => ({
+                const fetchedRecipes = data.hits.slice(0, 100).map(hit => ({
                     title: hit.recipe.label, // Recipe title
                     image: hit.recipe.image, // Recipe image URL
                     source: hit.recipe.source || 'Unknown', // Source of the recipe
@@ -60,8 +60,11 @@ const getRecipes = async (req, res) => {
             }
         }
 
+    const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
+    const selectedRecipes = shuffledRecipes.slice(0, 12);
+
     // Return the recipes as a JSON response
-    res.json(recipes);
+    res.json(selectedRecipes);
 
     } catch (error) {
         // Log and return a 500 error if an exception occurs

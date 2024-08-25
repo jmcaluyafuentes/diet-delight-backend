@@ -1,4 +1,4 @@
-# Diet Delight "Hello There"
+# Diet Delight
 
 A full stack web application by John Fuentes, Hy Nguyen and Branden Chiem.
 
@@ -169,7 +169,7 @@ Link to our Trello board --> https://trello.com/b/K1DuOj8t/diet-delight-web-app
 
 ![Trello board](./docs/trelloboard.png)
 
-### 14/08/2024 - Tasks planning and delegation stage
+### 14/08/2024 - Tasks planning stage
 
 ![ToDo1.png](./docs/ToDo1.png)  
 ![ToDo2.png](./docs/ToDo2.png)  
@@ -181,11 +181,28 @@ Link to our Trello board --> https://trello.com/b/K1DuOj8t/diet-delight-web-app
 ![ToDo8.png](./docs/ToDo8.png)  
 ![ToDo9.png](./docs/ToDo9.png)
 
-### 21/08/2024 - Implementation Stage
-![TelloBoard.png](./docs/trelloboard.png)
+### Implementation Stage
 
-### 22/08/2024 - Implementation Stage
-![TelloBoard2.png](./docs/trelloboard2.png)
+### 19/8/24
+![Trello board ](./docs/trello-19-8-24-min.png)
+
+### 20/8/24
+![Trello board ](./docs/trello-20-8-24-min.png)
+
+### 21/8/24
+![Trello board ](./docs/trello-21-8-24-min.png)
+
+### 22/8/24
+![Trello board ](./docs/trello-22-8-24-min.png)
+
+### 23/8/24
+![Trello board ](./docs/trello-23-8-24-min.png)
+
+### 24/8/24
+![Trello board ](./docs/trello-24-8-24-min.png)
+
+### 25/8/24
+![Trello board ](./docs/trello-25-8-24-min.png)
 
 ### API Endpoints
 

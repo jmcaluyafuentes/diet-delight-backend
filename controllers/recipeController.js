@@ -1,7 +1,7 @@
 import express from 'express';
 import Recipe from '../models/db.js';
 import fetchRecipes from '../service/edamamService.js';
-import printPDFRoute from './printPDF.js'; // Import the printPDF routes
+import printPDFRoute from './printPDF.js';
 
 const router = express.Router();
 

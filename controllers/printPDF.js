@@ -5,7 +5,7 @@ import { PassThrough } from 'stream';
 const router = express.Router();
 
 // Route to generate PDF
-router.post('/print', async (req, res) => {
+router.post('/', async (req, res) => {
     const recipes = req.body.recipes;
 
     if (!recipes || recipes.length === 0) {

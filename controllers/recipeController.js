@@ -13,22 +13,48 @@ const getRecipes = async (req, res) => {
         const dietCriteria = req.query.diet || [];
         const healthCriteria = req.query.health || [];
 
-        // Ensure dietCriteria and healthCriteria are arrays
-        const dietCriteriaArray = Array.isArray(dietCriteria) ? dietCriteria : [dietCriteria];
-        const healthCriteriaArray = Array.isArray(healthCriteria) ? healthCriteria : [healthCriteria];
+        // Function to capitalize the first letter of each word
+        const capitalizeWords = (str) => str
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join('-');
 
-        // Construct a query string for the Edamam API
-        const query1 = dietCriteriaArray.map(diet => `diet=${encodeURIComponent(diet)}`).join('&');
-        const query2 = healthCriteriaArray.map(health => `health=${encodeURIComponent(health)}`).join('&');
-        const query = query1 + '&' + query2;
+        // Function to convert string to lowercase
+        const toLowerCase = (str) => str.toLowerCase();
 
-        // Check the database first for available recipes
-        let recipes = await Recipe.find({}, { _id: 0, __v: 0 }).exec();
-        
+        // Normalize query parameters for MongoDB (capitalize first letter of each word)
+        const dietCriteriaArray = Array.isArray(dietCriteria) ? dietCriteria.map(d => capitalizeWords(d)) : [capitalizeWords(dietCriteria)];
+        const healthCriteriaArray = Array.isArray(healthCriteria) ? healthCriteria.map(h => capitalizeWords(h)) : [capitalizeWords(healthCriteria)];
+
+        // Normalize query parameters for Edamam API (all lowercase)
+        const dietCriteriaArrayLower = dietCriteriaArray.map(d => toLowerCase(d));
+        const healthCriteriaArrayLower = healthCriteriaArray.map(h => toLowerCase(h));
+
+        // Construct a query object for MongoDB
+        const query = {};
+
+        if (dietCriteriaArray.length > 0) {
+            query.dietLabels = { $all: dietCriteriaArray };
+        }
+
+        if (healthCriteriaArray.length > 0) {
+            query.healthLabels = { $all: healthCriteriaArray };
+        }
+
+        console.log('MongoDB Query:', query);
+
+        // Check the database for available recipes
+        let recipes = await Recipe.find(query, { _id: 0, __v: 0 }).exec();
+
+        console.log('Recipes from MongoDB:', recipes);
+
         if (recipes.length < 12) {
             // Fetch recipes from the Edamam API
-            const data = await fetchRecipes(`&${query}`);
-            console.log('Recipes fetched from Edamam API service provider.')
+            const queryString = dietCriteriaArrayLower.map(diet => `diet=${encodeURIComponent(diet)}`).join('&') +
+                                '&' +
+                                healthCriteriaArrayLower.map(health => `health=${encodeURIComponent(health)}`).join('&');
+            const data = await fetchRecipes(`&${queryString}`);
+            console.log('Recipes fetched from Edamam API service provider.');
 
             // Check if 'hits' property exists in the API response
             if (data && data.hits) {
@@ -38,8 +64,8 @@ const getRecipes = async (req, res) => {
                     image: hit.recipe.image, // Recipe image URL
                     source: hit.recipe.source || 'Unknown', // Source of the recipe
                     instructionsUrl: hit.recipe.url || 'No URL available', // URL for recipe instructions
-                    dietLabels: hit.recipe.dietLabels || [], // Commonly used nutrient level aspects of the recipe.
-                    healthLabels: hit.recipe.healthLabels || [], // Commonly used ingredient level aspects of the recipe.
+                    dietLabels: hit.recipe.dietLabels.map(label => capitalizeWords(label)) || [], // Normalize to match MongoDB format
+                    healthLabels: hit.recipe.healthLabels.map(label => capitalizeWords(label)) || [], // Normalize to match MongoDB format
                     ingredients: hit.recipe.ingredientLines || [], // List of ingredients
                     servingSize: hit.recipe.yield !== undefined ? hit.recipe.yield : null, // Number of servings
                     caloriesPerServing: hit.recipe.calories !== undefined ? hit.recipe.calories / hit.recipe.yield : null, // Calories per serving (kcal)
@@ -57,17 +83,18 @@ const getRecipes = async (req, res) => {
                 recipes = fetchedRecipes;
             } else {
                 // Return a 404 error if no recipes are found
-                res.status(404).json({ error: 'No recipes found' });
+                return res.status(404).json({ error: 'No recipes found' });
             }
         } else {
-            console.log('Recipes fetched from MongoDB.')
+            console.log('Recipes fetched from MongoDB.');
         }
 
-    const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
-    const selectedRecipes = shuffledRecipes.slice(0, 12);
+        // Shuffle and select 12 recipes
+        const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
+        const selectedRecipes = shuffledRecipes.slice(0, 12);
 
-    // Return the recipes as a JSON response
-    res.json(selectedRecipes);
+        // Return the recipes as a JSON response
+        res.json(selectedRecipes);
 
     } catch (error) {
         // Log and return a 500 error if an exception occurs

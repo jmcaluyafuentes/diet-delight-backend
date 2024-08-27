@@ -50,11 +50,12 @@ const getRecipes = async (req, res) => {
                                 '&' +
                                 healthCriteriaArrayLower.map(health => `health=${encodeURIComponent(health)}`).join('&');
             const data = await fetchRecipes(`&${queryString}`);
-            console.log('Recipes fetched from Edamam API service provider.');
-            dataFetchedFrom = 'Edamam API'
 
-            // Check if 'hits' property exists in the API response
-            if (data && data.hits) {
+            // Check if 'hits' property exists and is not an empty array in the API response
+            if (data && data.hits && data.hits.length > 0) {
+                    console.log('Recipes fetched from Edamam API service provider.');
+                    dataFetchedFrom = 'Edamam API'
+
                 // Slice the first 100 recipes
                 const fetchedRecipes = data.hits.slice(0, 100).map(hit => ({
                     title: hit.recipe.label, // Recipe title

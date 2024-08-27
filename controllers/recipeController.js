@@ -42,7 +42,8 @@ const getRecipes = async (req, res) => {
 
         // Check the database for available recipes
         let recipes = await Recipe.find(query, { _id: 0, __v: 0 }).exec();
-
+        let dataFetchedFrom;
+        
         if (recipes.length < 12) {
             // Fetch recipes from the Edamam API
             const queryString = dietCriteriaArrayLower.map(diet => `diet=${encodeURIComponent(diet)}`).join('&') +
@@ -50,6 +51,7 @@ const getRecipes = async (req, res) => {
                                 healthCriteriaArrayLower.map(health => `health=${encodeURIComponent(health)}`).join('&');
             const data = await fetchRecipes(`&${queryString}`);
             console.log('Recipes fetched from Edamam API service provider.');
+            dataFetchedFrom = 'Edamam API'
 
             // Check if 'hits' property exists in the API response
             if (data && data.hits) {
@@ -82,6 +84,7 @@ const getRecipes = async (req, res) => {
             }
         } else {
             console.log('Recipes fetched from MongoDB.');
+            dataFetchedFrom = 'MongoDB';
         }
 
         // Shuffle and select 12 recipes
@@ -89,7 +92,7 @@ const getRecipes = async (req, res) => {
         const selectedRecipes = shuffledRecipes.slice(0, 12);
 
         // Return the recipes as a JSON response
-        res.json(selectedRecipes);
+        res.json({ dataFetchedFrom, recipes: selectedRecipes });
 
     } catch (error) {
         // Log and return a 500 error if an exception occurs

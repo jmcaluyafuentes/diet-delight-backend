@@ -4,7 +4,7 @@ import { PassThrough } from 'stream';
 
 const router = express.Router();
 
-// Route to generate PDF
+// Route to generate a PDF with recipes
 router.post('/', async (req, res) => {
     const recipes = req.body.recipes;
 
@@ -12,6 +12,7 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ error: 'No recipes provided' });
     }
 
+    // Create a new PDF document
     const doc = new PDFDocument();
     const stream = new PassThrough();
     res.setHeader('Content-Type', 'application/pdf');

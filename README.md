@@ -226,7 +226,21 @@ Example Request:
 `GET /recipes?diet=high-protein&health=egg-free`
 
 Response:  
-Status Code: `200 OK`
+`200 OK` on successful retrieval.
+
+`404 Not Found` if no recipes were found based on the provided criteria.
+```json
+{
+  "error": "No recipes found"
+}
+```
+
+`500 Internal Server Error` if an error occurred while processing the request.
+```json
+{
+  "error": "Internal Server Error"
+}
+```
 
 Response body:  
 Please refer to https://diet-delight-backend.onrender.com/recipes?diet=high-protein&health=egg-free

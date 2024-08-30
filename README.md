@@ -1,18 +1,86 @@
 # Diet Delight
 
-A full stack web application by John Fuentes, Hy Nguyen and Branden Chiem.
+A full-stack web application by John Fuentes, Hy Nguyen and Branden Chiem.
 
 A capstone project for the Diploma of IT at Coder Academy.
 
-## R10: Deployed Website
+## R10: Deployed App and API
 
-Frontend: https://diet-delight.netlify.app/  
-Backend: https://diet-delight-backend.onrender.com/
+- App: https://diet-delight.netlify.app/  
+- API: https://diet-delight-backend.onrender.com/
 
 ## R11: Github Repository
 
-Frontend: https://github.com/jmcaluyafuentes/diet-delight-frontend  
-Backend: https://github.com/jmcaluyafuentes/diet-delight-backend
+- Frontend: https://github.com/jmcaluyafuentes/diet-delight-frontend  
+- Backend: https://github.com/jmcaluyafuentes/diet-delight-backend
+
+## Installation and Set Up Instructions
+
+Follow these steps to set up the project locally.
+
+### 1. Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js  
+- npm (Node Package Manager)
+
+### 2. Clone the Repository
+
+Clone the repository to your local machine:
+
+```
+git clone https://github.com/jmcaluyafuentes/diet-delight-backend.git
+```
+
+Navigate to the project directory:
+
+```
+cd diet-delight-backend
+```
+
+### 3. Install Dependencies
+
+```
+npm install
+```
+
+### 4. Environment Variables
+
+Create a `.env` file in the root of the project and add the necessary environment variables. You can refer to the `.env.example` file provided in the repository for the required variables.
+
+- `DB_URI`: The connection string for MongoDB database.  
+- `APP_ID`: Your Application ID from Edamam Recipe Search API  
+- `APP_KEY`: Your Application Key from Edamam Recipe Search API
+
+### How to Obtain `APP_ID` and `APP_KEY`
+
+1. Visit the [Edamam website](https://www.edamam.com/)
+2. Click on Signup API
+3. Fill up the signup form.
+  - Organization name: Can be any name (e.g., your school or organization)  
+  - Choose your plan: Select `Developer` under `Recipe Search API`
+
+4. After signing up, click Log in
+5. Click `Go to Dashboard`
+5. Navigate to the Application tab and click `View` to find your `Application ID (APP_ID)` and `Application Keys (APP_KEY)`.  
+  Note: Do not include the trailing `(space and dash) —` in the APP_KEY.
+
+### 5. Running the Application
+
+To start the development server, run:
+
+```
+npm start
+```
+
+This will start the application on http://localhost:4001/
+
+### 6. Running Tests
+
+```
+npm test
+```
 
 ## R1: Website Desciption
 

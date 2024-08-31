@@ -22,14 +22,14 @@ describe('Recipe Controller Tests', () => {
         });
 
         it('fetch recipes and return a successful response', async () => {
-        const response = await request(app).get('/recipes?diet=high-protein&health=egg-free');
+        const response = await request(app).get('/recipes?diet=high-protein&health=egg-free'); // Send HTTP GET Request to the API
         expect(response.status).toBe(200); // Check if the status code is 200 OK
         expect(response.body.recipes).toBeDefined(); // Check if the recipe is returned from the API endpoint
         expect(response.body.dataFetchedFrom).toBeDefined();
         });
 
         it('return 404 if no recipes are found', async () => {
-        const response = await request(app).get('/recipes?diet=nonexistent-diet&health=nonexistent-health');
+        const response = await request(app).get('/recipes?diet=nonexistent-diet&health=nonexistent-health'); // Send HTTP GET Request to the API
         expect(response.status).toBe(404); // Check if the status code is 404 Not Found
         expect(response.body.error).toBe('No recipes found'); // Check if the response body is returning the correct error message.
         })
@@ -37,7 +37,7 @@ describe('Recipe Controller Tests', () => {
         it('throw exception errors if there is an error when retrieving recipes', async () => {
         await mongoose.disconnect(); // Disconnect from the MongoDB database to force an error
 
-        const response = await request(app).get('/recipes'); // Send a HTTP GET Request to the endpoint
+        const response = await request(app).get('/recipes'); // Send HTTP GET Request to the API
         expect(response.status).toBe(500); // Check if the status code is 500 Internal Server Error
         expect(response.body.error).toBe('Internal Server Error'); // Check if response body is returning the correct error message.
 

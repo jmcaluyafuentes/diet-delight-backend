@@ -21,20 +21,20 @@ describe('Recipe Controller Tests', () => {
     await mongoose.disconnect();
   });
 
-  it('should fetch recipes and return a successful response', async () => {
+  it('fetch recipes and return a successful response', async () => {
     const response = await request(app).get('/recipes?diet=high-protein&health=egg-free');
     expect(response.status).toBe(200);
     expect(response.body.recipes).toBeDefined();
     expect(response.body.dataFetchedFrom).toBeDefined();
   });
 
-  it('should return 404 if no recipes are found', async () => {
+  it('return 404 if no recipes are found', async () => {
     const response = await request(app).get('/recipes?diet=nonexistent-diet&health=nonexistent-health');
     expect(response.status).toBe(404);
     expect(response.body.error).toBe('No recipes found');
   });
 
-  it('should handle database errors', async () => {
+  it('handle exception errors if there is an error when retrieving recipes', async () => {
     // Simulate a database disconnection to force an error
     await mongoose.disconnect();
   

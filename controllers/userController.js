@@ -78,4 +78,15 @@ router.post("/register", async (req, res) => {
     }
 })
 
+router.get('/all-users',  async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users.map((user) => user.username));
+
+    } catch (error) {
+        console.error('Error retrieving all users');
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
 export default router;

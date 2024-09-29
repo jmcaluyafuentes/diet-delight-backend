@@ -26,9 +26,27 @@ router.post("/add-user", async(req, res) => {
             username: newUser.username
         });
     } catch (error) {
-        console.log('Error adding user: ', error);
+        console.error('Error adding user: ', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+router.delete("/delete-user", async(req, res) => {
+    const { username } = req.body;
+    
+    try {
+        const existingUSer = await User.findOne({ username });
+        
+        if (existingUSer) {
+            await User.deleteOne({ username });
+            return res.status(200).json({ message: 'User deleted successfully' });
+        }
+
+        res.status(404).json({ message: 'User not found' });
+    } catch (error) {
+        console.error('Error deleting user', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+})
 
 export default router;

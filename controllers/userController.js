@@ -2,6 +2,9 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import User from '../models/User.js'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -81,6 +84,31 @@ router.delete('/all-users', async (req, res) => {
     } catch (error) {
         console.error('Error deleting the users', error);
         res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found'});
+        }
+
+        const isPasswordValid = bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Username or password is incorrect' });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        res.status(200).json({ userID: user._id, token });
+    } catch (error) {
+        console.error('Error in login', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 

@@ -1,5 +1,6 @@
 import express from 'express'
 import recipeRoutes from './controllers/recipeController.js'
+import userRoutes from './controllers/userController.js'
 import cors from 'cors'
 
 const app = express();
@@ -16,5 +17,7 @@ app.get('/', (req, res) => {
 
 // Mount recipe routes to handle requests related to recipes
 app.use('/recipes', recipeRoutes);
+
+app.use('/auth', userRoutes);
 
 export default app

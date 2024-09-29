@@ -31,7 +31,7 @@ router.post("/add-user", async(req, res) => {
     }
 });
 
-router.delete("/delete-user", async(req, res) => {
+router.delete("/delete-user", async (req, res) => {
     const { username } = req.body;
     
     try {
@@ -46,6 +46,34 @@ router.delete("/delete-user", async(req, res) => {
     } catch (error) {
         console.error('Error deleting user', error);
         res.status(500).json({ message: 'Internal server error' });
+    }
+})
+
+router.post("/register", async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const existingUser = await User.findOne({ username });
+        console.log(existingUser)
+        
+        if (existingUser) {
+            return res.status(200).json({ message: 'User already exists' })
+        } 
+        
+        const newUser = new User({
+            username: username,
+            password: password
+        })
+
+        newUser.save();
+
+        res.status(200).json({
+            message: 'User registered successfully',
+            username: newUser.username
+        })
+    } catch (error) {
+        console.error('Failed to registered a user')
+        res.status(500).json({ message: 'Internal server error' })
     }
 })
 
